@@ -1,0 +1,18 @@
+server:
+  port: 8088
+spring:
+  servlet:
+    multipart:
+      max-file-size: 20MB #                                                                                                                                                                                                                                                                                                                                                                                                                        单个文件上传大小
+      max-request-size: 100MB # 连续上传文件大小
+      file-size-threshold: 0 # 缓存文件阈值，超过之后的文件落盘，单位byte（B）
+file:
+  storage:
+    root-directory: F:\FileUpload\ # 文件上传根根路径，缺省值/data/FileUpload/，windows环境下建议覆盖
+  upload:
+    resolver:
+      clean: true # 缓存文件是否清理，缺省值true
+      buffer-threshold: 5 # 缓存文件保持时间，缺省值60，单位分钟
+  io:
+    buffer-size: 2048 # IO操作允许的缓冲区大小，缺省值1024×1024，单位kb
+#debug: true

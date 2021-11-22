@@ -1,0 +1,11 @@
+server:
+  servlet:
+    context-path: /file
+    session:
+      timeout: 60m #默认值30m，30分钟
+spring:
+  profiles:
+    active: @env@ # local dev test production
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
