@@ -6,6 +6,18 @@ spring:
       max-file-size: 20MB #                                                                                                                                                                                                                                                                                                                                                                                                                        单个文件上传大小
       max-request-size: 100MB # 连续上传文件大小
       file-size-threshold: 0 # 缓存文件阈值，超过之后的文件落盘，单位byte（B）
+  redis:
+    host: localhost
+    port: 6379
+    password: exprass
+    database: 1
+    lettuce:
+      pool:
+        max-wait: 30000
+        max-active: 10
+        max-idle: 2
+        min-idle: 0
+        timeout: 3000
 file:
   storage:
     root-directory: F:\FileUpload\ # 文件上传根根路径，缺省值/data/FileUpload/，windows环境下建议覆盖

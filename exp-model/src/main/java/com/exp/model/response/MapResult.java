@@ -12,7 +12,7 @@ import java.util.Map;
 @Getter
 public class MapResult extends BaseResult {
     
-    private Map<String, Object> map = new HashMap<>();
+    private final Map<String, Object> data = new HashMap<>();
     
     /**
      * 填充数据
@@ -22,7 +22,7 @@ public class MapResult extends BaseResult {
      * @return
      */
     public MapResult put(String key, Object value) {
-        this.map.put(key, value);
+        this.data.put(key, value);
         return this;
     }
     
@@ -33,7 +33,7 @@ public class MapResult extends BaseResult {
      * @return
      */
     public MapResult putAll(Map<String, Object> map) {
-        this.map.putAll(map);
+        this.data.putAll(map);
         return this;
     }
     

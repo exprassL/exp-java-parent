@@ -14,10 +14,10 @@ public class RedirectResult extends BaseResult {
     /**
      * 重定向地址
      */
-    private String url;
+    private String data;
     
     public RedirectResult redirectTo(String url) {
-        this.url = url;
+        this.data = url;
         this.setMessage(url);
         return this;
     }

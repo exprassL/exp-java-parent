@@ -30,6 +30,7 @@ spring:
     host: localhost
     port: 6379
     password: exprass
+    database: 2
     lettuce:
       pool:
         max-wait: 30000

@@ -16,7 +16,7 @@ import java.util.List;
 @Setter
 public class ListResult<T> extends BaseResult {
     
-    private List<T> dataList = new LinkedList<>();
+    private List<T> data = new LinkedList<>();
     
     /**
      * 填充一个数据
@@ -25,7 +25,7 @@ public class ListResult<T> extends BaseResult {
      * @return
      */
     public ListResult<T> add(T element) {
-        this.dataList.add(element);
+        this.data.add(element);
         return this;
     }
     
@@ -36,7 +36,7 @@ public class ListResult<T> extends BaseResult {
      * @return
      */
     public ListResult<T> addAll(List<T> elements) {
-        this.dataList.addAll(elements);
+        this.data.addAll(elements);
         return this;
     }
     

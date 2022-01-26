@@ -1,26 +1,16 @@
 package com.exp.web.file.buffer;
 
-import com.exp.web.file.pojo.FileUploadProgress;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.fileupload.*;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.util.Assert;
-import org.springframework.util.MultiValueMap;
-import org.springframework.web.multipart.MaxUploadSizeExceededException;
-import org.springframework.web.multipart.MultipartException;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
@@ -62,7 +52,7 @@ public class BufferPool implements InitializingBean, DisposableBean {
     private static long bufferThreshold;
     private static boolean clean;
     
-    @Resource
+    @Resource(type = BufferedMultipartResolver.class)
     private CommonsMultipartResolver multipartResolver;
     
     /**
@@ -109,7 +99,7 @@ public class BufferPool implements InitializingBean, DisposableBean {
         try {
             Map<String, BufferedMultipartFile> map = pool.computeIfAbsent(sessionId, k -> new HashMap<>());
             
-            String id = UUID.randomUUID().toString();
+            String id = BufferedMultipartResolver.getSegmentId();
             BufferedMultipartFile bufferedFile = new BufferedMultipartFile();
             bufferedFile.setId(id);
             bufferedFile.setFile(file);
@@ -252,65 +242,6 @@ public class BufferPool implements InitializingBean, DisposableBean {
         
         Timer timer = new Timer("CleanBufferedMultiPartFile", true);
         timer.schedule(task, bufferThreshold, bufferThreshold);
-    }
-    
-    @Bean
-    CommonsMultipartResolver multipartResolver() {
-        return new CommonsMultipartResolver() {
-    
-            /**
-             * 重写以支持上传进度。
-             * 上传进度指一次上传整体的进度，而不是单个文件的进度；若要对多个文件进行进度监听，请一次上传一个文件。
-             *
-             * @param request
-             * @return
-             * @throws MultipartException
-             */
-            @Override
-            protected MultipartParsingResult parseRequest(HttpServletRequest request) throws MultipartException {
-                String encoding = determineEncoding(request);
-                FileUpload fileUpload = prepareFileUpload(encoding);
-                fileUpload.setProgressListener(new ProgressListener() {
-                    
-                    private HttpSession session;
-                    
-                    private ProgressListener setSession(HttpSession session) {
-                        this.session = session;
-                        return this;
-                    }
-                    
-                    @Override
-                    public void update(long pBytesRead, long pContentLength, int pItems) {
-                        session.setAttribute("progress", new FileUploadProgress()
-                                .setItems(pItems).setTotal(pContentLength).setRead(pBytesRead));
-                    }
-                    
-                }.setSession(request.getSession()));
-                
-                try {
-                    List<FileItem> fileItems = ((ServletFileUpload) fileUpload).parseRequest(request);
-                    return parseFileItems(fileItems, encoding);
-                } catch (FileUploadBase.SizeLimitExceededException ex) {
-                    throw new MaxUploadSizeExceededException(fileUpload.getSizeMax(), ex);
-                } catch (FileUploadBase.FileSizeLimitExceededException ex) {
-                    throw new MaxUploadSizeExceededException(fileUpload.getFileSizeMax(), ex);
-                } catch (FileUploadException ex) {
-                    throw new MultipartException("Failed to parse multipart servlet request", ex);
-                }
-            }
-            
-            @Override
-            protected void cleanupFileItems(MultiValueMap<String, MultipartFile> multipartFiles) {
-                for (List<MultipartFile> files : multipartFiles.values()) {
-                    for (MultipartFile file : files) {
-                        if (file instanceof CommonsMultipartFile) {
-                            // 请求结束，不删除文件，而是将文件缓存待用
-                            // TODO FIXME 在此处调用缓存方法？
-                        }
-                    }
-                }
-            }
-        };
     }
     
     /**

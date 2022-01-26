@@ -15,7 +15,7 @@ import lombok.Setter;
 @Setter
 public class EntityResult<T extends BaseEntity> extends BaseResult {
 
-    private T entity;
+    private T data;
     
     /**
      * 填充实体数据
@@ -24,7 +24,7 @@ public class EntityResult<T extends BaseEntity> extends BaseResult {
      * @return
      */
     public EntityResult<T> success(T entity) {
-        this.entity = entity;
+        this.data = entity;
         return this;
     }
     

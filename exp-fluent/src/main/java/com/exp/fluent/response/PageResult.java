@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -20,13 +21,12 @@ import java.util.List;
 @Accessors(chain = true)
 public class PageResult<T extends BaseEntity> extends BaseResult {
     
-    private int pageNo;
+    private Page<T> data = new Page<>();
     
-    private int pageSize;
-    
-    private int total;
-    
-    private List<T> dataList = new LinkedList<>();
+    public PageResult<T> buildPage(int pageNo, int pageSize, int total, List<T> rows) {
+        this.data.setPageNo(pageNo).setPageSize(pageSize).setTotal(total).setRows(rows);
+        return this;
+    }
     
     /**
      * 响应失败信息
@@ -38,5 +38,25 @@ public class PageResult<T extends BaseEntity> extends BaseResult {
         this.setSuccess(Boolean.FALSE);
         this.setMessage(message);
         return this;
+    }
+    
+    /**
+     * 分页对象
+     *
+     * @param <T>
+     */
+    @Getter
+    @Setter
+    @Accessors(chain = true)
+    private static class Page<T> implements Serializable {
+        private static final long serialVersionUID = 5574986699035619554L;
+    
+        private int pageNo;
+    
+        private int pageSize;
+    
+        private int total;
+    
+        private List<T> rows = new LinkedList<>();
     }
 }

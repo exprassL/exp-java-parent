@@ -31,7 +31,7 @@ public interface IFileUploadService {
      */
     default ListResult<BufferedMultipartFile> store(UploadType type, String root, String sessionId, String... ids) {
         ListResult<BufferedMultipartFile> result = new ListResult<>();
-        List<BufferedMultipartFile> list = result.getDataList();
+        List<BufferedMultipartFile> list = result.getData();
         String sep = File.separator;
         StringBuilder fileDir = new StringBuilder(root).append(type.name()).append(sep)
                 .append(DateTimeUtils.today()).append(sep).append(sessionId);
