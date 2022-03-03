@@ -1,19 +1,20 @@
 package com.exp.toolkit.basic;
 
+import java.util.Arrays;
+
 public final class ArrayUtils {
     
     /**
      * 判断指定元素与数组中哪一个下标的元素{@code equals}相等
      *
-     * @param ta 数组
+     * @param ar 数组
      * @param t   元素
-     * @param <T> 数组元素类型，应该覆盖{@link Object#hashCode()}和{@link Object#equals(Object)}方法
      * @return  返回匹配元素在数组中的下标，或者数组中不包含匹配元素时返回-1
      */
-    public static <T> int indexOf(T[] ta, T t) {
-        int len = ta.length;
+    public static int indexOf(Object[] ar, Object t) {
+        int len = ar.length;
         for (int i = 0; i < len; i++) {
-            if (ta[i].equals(t)) {
+            if (ar[i].equals(t)) {
                 return i;
             }
         }
@@ -23,15 +24,14 @@ public final class ArrayUtils {
     /**
      * 获取元素在数组中的下标
      *
-     * @param ta 数组
+     * @param ar 数组
      * @param t   元素
-     * @param <T> 数组元素类型
      * @return 返回元素在数组中的下标，或者数组中包含此元素时返回-1
      */
-    public static <T> int exactIndexOf(T[] ta, T t) {
-        int len = ta.length;
+    public static int exactIndexOf(Object[] ar, Object t) {
+        int len = ar.length;
         for (int i = 0; i < len; i++) {
-            if (ta[i] == t) {
+            if (ar[i] == t) {
                 return i;
             }
         }
@@ -93,4 +93,72 @@ public final class ArrayUtils {
         }
         return -1;
     }
+    
+    /**
+     * 将原数组倒序
+     *
+     * @param arr 原数组
+     */
+    public static void reverse(Object[] arr) {
+        int l = arr.length;
+        for (int i = 0, half = arr.length / 2; i < half; i ++) {
+            Object tmp = arr[i];
+            int r = l - 1 - i;
+            arr[i] = arr[r];
+            arr[r] = tmp;
+        }
+    }
+    
+    /**
+     * @see #reverse(Object[])
+     */
+    public static void reverse(int[] arr) {
+        int l = arr.length;
+        for (int i = 0, half = arr.length / 2; i < half; i ++) {
+            int tmp = arr[i];
+            int r = l - 1 - i;
+            arr[i] = arr[r];
+            arr[r] = tmp;
+        }
+    }
+    
+    /**
+     * @see #reverse(Object[])
+     */
+    public static void reverse(long[] arr) {
+        int l = arr.length;
+        for (int i = 0, half = arr.length / 2; i < half; i ++) {
+            long tmp = arr[i];
+            int r = l - 1 - i;
+            arr[i] = arr[r];
+            arr[r] = tmp;
+        }
+    }
+    
+    /**
+     * @see #reverse(Object[])
+     */
+    public static void reverse(float[] arr) {
+        int l = arr.length;
+        for (int i = 0, half = arr.length / 2; i < half; i ++) {
+            float tmp = arr[i];
+            int r = l - 1 - i;
+            arr[i] = arr[r];
+            arr[r] = tmp;
+        }
+    }
+    
+    /**
+     * @see #reverse(Object[])
+     */
+    public static void reverse(double[] arr) {
+        int l = arr.length;
+        for (int i = 0, half = arr.length / 2; i < half; i ++) {
+            double tmp = arr[i];
+            int r = l - 1 - i;
+            arr[i] = arr[r];
+            arr[r] = tmp;
+        }
+    }
+    
 }

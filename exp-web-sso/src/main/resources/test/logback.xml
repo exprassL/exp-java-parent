@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <!-- 定义日志存储的路径，不要配置相对路径 -->
+    <!-- dev -->
+    <property name="FILE_PATH" value="F:/logs" />
+
+    <!-- test -->
+    <!--    <property name="FILE_PATH" value="/data/logs" />-->
+
+    <!--pre-->
+    <!--    <property name="FILE_PATH" value="/data/logs" />-->
+
+    <!-- prod -->
+    <!--    <property name="FILE_PATH" value="/data/logs" />-->
+
+    <!-- 格式化输出：%date表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度 %msg：日志消息，%n是换行符-->
+    <property name="LOG_PATTERN" value="%date{MM-dd HH:mm:ss.SSS} [%thread] %-5level %-60logger{60} - %msg%n" />
+
+    <!-- 控制台输出日志 -->
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${LOG_PATTERN}</pattern>
+        </encoder>
+    </appender>
+
+    <!--rollingFile按照指定策略将日志追加到文件以备份，相当于日志的处理程序-->
+    <appender name="rollingFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <encoder>
+            <pattern>${LOG_PATTERN}</pattern>
+            <charset>utf8</charset>
+        </encoder>
+
+        <file>${FILE_PATH}/sso.log</file>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy"><!--基于文件大小和时间的备份策略-->
+            <fileNamePattern>${FILE_PATH}/file-%d{yyyy-MM-dd}-%i.log</fileNamePattern>
+            <maxFileSize>100MB</maxFileSize>
+            <!-- keep 7 days' worth of history -->
+            <maxHistory>7</maxHistory>
+            <totalSizeCap>1GB</totalSizeCap>
+        </rollingPolicy>
+    </appender>
+
+    <!-- project default level -->
+    <logger name="com.exp.web" level="INFO" />
+
+    <!-- 日志输出级别 -->
+    <root level="INFO">
+        <appender-ref ref="console" />
+        <appender-ref ref="rollingFile" />
+    </root>
+
+    <!--可输出sql？-->
+    <!--    <logger name="com.exp.web.dao" level="DEBUG" />-->
+
+</configuration>
