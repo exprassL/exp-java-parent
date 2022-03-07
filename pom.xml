@@ -24,6 +24,7 @@
         <module>exp-web-sso</module>
         <module>exp-web-story</module>
         <module>exp-web-file</module>
+        <module>exp-web-baidu</module>
     </modules>
 
     <properties>
