@@ -14,6 +14,7 @@ import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.session.FlushMode;
@@ -38,6 +39,16 @@ public class RedisConfig extends CachingConfigurerSupport {
     @Autowired
     public void setFactory(RedisConnectionFactory factory) {
         this.factory = factory;
+    }
+    
+    /**
+     * 初始化，将相应的 RedisTemplate 手动注入到 RedisUtil
+     * @param redisTemplate
+     * @param stringRedisTemplate
+     */
+    @Autowired
+    public void initRedisUtil(RedisTemplate<String, Object> redisTemplate, StringRedisTemplate stringRedisTemplate) {
+        RedisUtil.init(redisTemplate, stringRedisTemplate);
     }
     
     @Bean

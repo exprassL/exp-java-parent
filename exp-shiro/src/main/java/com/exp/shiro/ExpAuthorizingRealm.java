@@ -3,6 +3,7 @@ package com.exp.shiro;
 import com.exp.fluent.constant.TokenType;
 import com.exp.fluent.entity.User;
 import com.exp.service.impl.UserService;
+import com.exp.web.context.AppContextUtil;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
@@ -25,6 +26,11 @@ public class ExpAuthorizingRealm extends AuthorizingRealm {
     
     public static void setTokenType(TokenType tokenType) {
         TOKEN_TYPE_THREAD_LOCAL.set(tokenType);
+    }
+    
+    @Override
+    public boolean supports(AuthenticationToken token) {
+        return super.supports(token) || token instanceof BearerToken;
     }
     
     /**
@@ -51,8 +57,8 @@ public class ExpAuthorizingRealm extends AuthorizingRealm {
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
         if (authenticationToken instanceof BearerToken) {
             String token = ((BearerToken) authenticationToken).getToken();
-            Object principal = userService.getByToken(token, TOKEN_TYPE_THREAD_LOCAL.get());
-            return new SimpleAuthenticationInfo(principal, token, getName());
+            User user = userService.getByToken(token, TOKEN_TYPE_THREAD_LOCAL.get());
+            return new SimpleAuthenticationInfo(user, token, getName());
 
         } else if (authenticationToken instanceof UsernamePasswordToken) {
             String username = ((UsernamePasswordToken) authenticationToken).getUsername();

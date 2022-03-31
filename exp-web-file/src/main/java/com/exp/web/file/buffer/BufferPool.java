@@ -166,11 +166,13 @@ public class BufferPool implements InitializingBean, DisposableBean {
                     }
                     
                     long lifeCycleStart = file.getLifeCycleStart();
-                    log.info("缓存文件超时清理：当前时间={}，sessionId={}，fileId={}，生命周期开始={}", now, sessionId, fileId, lifeCycleStart);
-                    if (lifeCycleStart + BufferPool.bufferThreshold <= now) {
+                    // 生命周期开始 + 存活时间 - 当前，表示生命周期剩余时间，剩余时间大于0表示生命周期继续，反之表示生命周期结束
+                    long lifeLeft = lifeCycleStart + BufferPool.bufferThreshold - now;
+                    log.info("缓存文件超时清理：sessionId={}，fileId={}，生命周期剩余：{}", sessionId, fileId, lifeLeft);
+                    if (lifeLeft <= 0) {
                         file.getFile().getFileItem().delete();
                         it.remove();
-                        log.info("缓存文件超时清理：当前时间={}，sessionId={}，fileId={}，生命周期开始={}，超时删除", now, sessionId, fileId, lifeCycleStart);
+                        log.info("超时删除");
                     }
                 }
                 
@@ -261,7 +263,7 @@ public class BufferPool implements InitializingBean, DisposableBean {
     @Value("${file.storage.root-directory:/data/FileUpload/}")
     private void setPath(String path) throws IOException {
         BufferPool.rootDirectory = path;
-        String tempPath = path + "TEMP";
+        String tempPath = path + "temp";
         File file = new java.io.File(tempPath);
         if (!file.exists() && !file.mkdirs()) {
             throw new IllegalArgumentException("Given uploadTempDir [" + file + "] could not be created");

@@ -57,6 +57,7 @@ public class BufferedMultipartResolver extends CommonsMultipartResolver {
         String encoding = determineEncoding(request);
         FileUpload fileUpload = prepareFileUpload(encoding);
         final String uuid = StringUtils.uuid();
+        log.info("生成uuid");
         PROGRESS_ID_HOLDER.set(uuid);
     
         fileUpload.setProgressListener(new ProgressListener() {

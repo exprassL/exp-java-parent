@@ -1,7 +1,6 @@
 package com.exp.fluent.entity;
 
 import cn.org.atool.fluent.mybatis.annotation.FluentMybatis;
-import cn.org.atool.fluent.mybatis.annotation.LogicDelete;
 import cn.org.atool.fluent.mybatis.annotation.TableField;
 import cn.org.atool.fluent.mybatis.annotation.TableId;
 import cn.org.atool.fluent.mybatis.base.RichEntity;
@@ -42,14 +41,9 @@ public class User extends RichEntity implements IEntityDefault {
   private Integer id;
 
   /**
-   * 是否逻辑删除：1-是，0-否
    */
-  @TableField(
-      value = "logic_deleted",
-      insert = "0"
-  )
-  @LogicDelete
-  private Boolean logicDeleted;
+  @TableField("logical_deleted")
+  private Boolean logicalDeleted;
 
   /**
    * 创建人

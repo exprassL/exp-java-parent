@@ -24,7 +24,6 @@
         <module>exp-web-sso</module>
         <module>exp-web-story</module>
         <module>exp-web-file</module>
-        <module>exp-web-baidu</module>
     </modules>
 
     <properties>
@@ -49,6 +48,7 @@
         <bcprov.jdk15on.version>1.60</bcprov.jdk15on.version>
         <shiro.version>1.5.3</shiro.version>
         <jackson.version>2.11.4</jackson.version>
+        <mvn-complier-plugin.version>3.8.1</mvn-complier-plugin.version>
     </properties>
 
     <dependencyManagement>
@@ -106,10 +106,10 @@
                 <version>${springboot.version}</version>
                 <scope>test</scope>
                 <exclusions>
-                    <!--                    <exclusion>-->
-                    <!--                        <groupId>org.springframework.boot</groupId>-->
-                    <!--                        <artifactId>spring-boot-starter</artifactId>-->
-                    <!--                    </exclusion>-->
+<!--                    <exclusion>-->
+<!--                        <groupId>org.springframework.boot</groupId>-->
+<!--                        <artifactId>spring-boot-starter</artifactId>-->
+<!--                    </exclusion>-->
                     <exclusion>
                         <groupId>org.slf4j</groupId>
                         <artifactId>slf4j-api</artifactId>
@@ -193,6 +193,13 @@
                         <artifactId>spring-core</artifactId>
                     </exclusion>
                 </exclusions>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-configuration-processor</artifactId>
+                <version>${springboot.version}</version>
+                <optional>true</optional>
             </dependency>
 
             <dependency>
@@ -381,22 +388,39 @@
             </testResource>
         </testResources>
 
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>${mvn-complier-plugin.version}</version>
+                    <configuration>
+                        <source>${java.version}</source>
+                        <target>${java.version}</target>
+                        <encoding>utf-8</encoding>
+                        <showWarnings>true</showWarnings>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                    <version>${springboot.version}</version>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>repackage</goal>
+                                <goal>build-info</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
-                <configuration>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
-                    <encoding>utf-8</encoding>
-                    <showWarnings>true</showWarnings>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>${springboot.version}</version>
             </plugin>
         </plugins>
 

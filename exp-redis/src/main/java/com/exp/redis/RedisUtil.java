@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * redis操作封装
  */
-@Component
+//@Component
 public final class RedisUtil {
     
     // FIXME pipeline操作未实现
@@ -23,8 +23,12 @@ public final class RedisUtil {
     
     private static StringRedisTemplate stringRedisTemplate;
     
-    @Autowired
-    public RedisUtil(RedisTemplate<String, Object> redisTemplate, StringRedisTemplate stringRedisTemplate) {
+    /**
+     * @param redisTemplate
+     * @param stringRedisTemplate
+     */
+//    @Autowired
+    public static void init(RedisTemplate<String, Object> redisTemplate, StringRedisTemplate stringRedisTemplate) {
         RedisUtil.redisTemplate = redisTemplate;
         RedisUtil.stringRedisTemplate = stringRedisTemplate;
     }
