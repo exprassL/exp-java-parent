@@ -7,7 +7,7 @@ spring:
   redis:
     host: localhost
     port: 6379
-    password: exprass
+    auth: exprass
     database: 0
     lettuce:
       pool:
@@ -18,7 +18,7 @@ spring:
         timeout: 3000
 file:
   storage:
-    root-directory: F:\FileUpload\ # 文件上传根根路径，缺省值/data/FileUpload/，windows环境下建议覆盖
+    root-directory: F:\fileupload\ # 文件上传根根路径，缺省值/data/fileupload/，windows环境下建议覆盖
   upload:
     resolver:
       clean: true # 缓存文件是否清理，缺省值true

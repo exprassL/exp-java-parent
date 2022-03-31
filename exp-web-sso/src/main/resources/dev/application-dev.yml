@@ -27,7 +27,7 @@ spring:
   redis:
     host: localhost
     port: 6379
-    password: exprass
+    auth: exprass
     database: 0
     lettuce:
       pool:
@@ -37,3 +37,14 @@ spring:
         min-idle: 0
         timeout: 3000
 #debug: true
+app:
+  growing-story: # growing-story 应用配置开始
+    home: # 应用主页
+    baidu: # 应用集成百度开放平台 api 配置开始
+      net-disk: # 集成（需注册到）百度网盘开放平台
+        app-key: xV508jGyGYHDTMdG3rCZLztWTF93lcRu # 注册的 appKey
+        secret-key: rybByzXGVs155EptAfCosfBFrnD3fNoP # 注册的 secretKey
+        redirect-uri: # 注册的 OAuth 授权回调地址
+    wechat:
+    alipay:
+

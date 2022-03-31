@@ -29,7 +29,7 @@ import static org.junit.Assert.assertTrue;
 @MapperScan(basePackageClasses = FileMapper.class)
 public class AlbumServiceTest {
     
-    private static Logger logger = LoggerFactory.getLogger("test");
+    private static final Logger logger = LoggerFactory.getLogger("test");
     
     @Resource
     private AlbumService albumService;
@@ -44,7 +44,8 @@ public class AlbumServiceTest {
     
     @Test
     public void testAdd() {
-        Album album = albumService.add(new Album().setName("My First Album"));
+        Album album = new Album().setName("My First Album");
+        Integer id = albumService.add(album);
         Assert.assertNotNull(album);
         Assert.assertNotNull(album.getId());
     }

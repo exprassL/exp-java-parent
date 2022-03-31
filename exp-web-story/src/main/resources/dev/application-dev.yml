@@ -27,7 +27,7 @@ spring:
   redis:
     host: localhost
     port: 6379
-    password: exprass
+    auth: exprass
     database: 0
     lettuce:
       pool:

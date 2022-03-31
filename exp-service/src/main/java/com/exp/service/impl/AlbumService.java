@@ -6,6 +6,7 @@ import com.exp.fluent.entity.Album;
 import com.exp.fluent.entity.AlbumFile;
 import com.exp.fluent.entity.File;
 import com.exp.model.response.ListResult;
+import com.exp.service.AbstractBaseService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,34 +21,15 @@ import java.util.List;
 @Slf4j
 @Service
 @Transactional
-public class AlbumService {
+public class AlbumService extends AbstractBaseService<Album, Integer> {
     
     @Resource
-    private AlbumDao albumDao;
+    private void setDao(AlbumDao albumDao) {
+        super.baseDao = albumDao;
+    }
     
     @Resource
     private FileDao fileDao;
-    
-    /**
-     * 新增一个相册
-     *
-     * @param album 待新增的相册
-     * @return  新增的相册
-     */
-    public Album add(Album album) {
-        albumDao.save(album);
-        return album;
-    }
-    
-    /**
-     * 获取相册信息，根据id
-     *
-     * @param id    相册id
-     * @return      相册
-     */
-    public Album get(Integer id) {
-        return albumDao.selectById(id);
-    }
     
     /**
      * 图片文件关联到相册
