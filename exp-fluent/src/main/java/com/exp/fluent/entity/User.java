@@ -89,7 +89,7 @@ public class User extends RichEntity implements IEntityDefault {
   private String tenant;
 
   /**
-   * 账号（登录名）
+   * 帐号（登录名）
    */
   @TableField("username")
   private String username;
