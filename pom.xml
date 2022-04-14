@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <name>exp-java-parent</name>
     <description>Springboot Web项目父级</description>
@@ -41,14 +39,16 @@
         <commons.fileupload.version>1.4</commons.fileupload.version>
         <thumbnailator.version>0.4.14</thumbnailator.version>
         <fluent.mybatis.version>1.8.7</fluent.mybatis.version>
-        <mysql.connector>8.0.21</mysql.connector>
+        <mysql.connector>8.0.28</mysql.connector>
         <druid.version>1.2.8</druid.version>
         <jupiter.api.version>5.6.3</jupiter.api.version>
         <commons.codec.version>1.14</commons.codec.version>
-        <bcprov.jdk15on.version>1.60</bcprov.jdk15on.version>
+        <bcprov.jdk15on.version>1.70</bcprov.jdk15on.version>
         <shiro.version>1.5.3</shiro.version>
         <jackson.version>2.11.4</jackson.version>
         <mvn-complier-plugin.version>3.8.1</mvn-complier-plugin.version>
+        <lombok-maven-plugin.version>1.18.20.0</lombok-maven-plugin.version>
+        <build-helper-maven-plugin.version>3.3.0</build-helper-maven-plugin.version>
     </properties>
 
     <dependencyManagement>
@@ -106,10 +106,10 @@
                 <version>${springboot.version}</version>
                 <scope>test</scope>
                 <exclusions>
-<!--                    <exclusion>-->
-<!--                        <groupId>org.springframework.boot</groupId>-->
-<!--                        <artifactId>spring-boot-starter</artifactId>-->
-<!--                    </exclusion>-->
+                    <!--                    <exclusion>-->
+                    <!--                        <groupId>org.springframework.boot</groupId>-->
+                    <!--                        <artifactId>spring-boot-starter</artifactId>-->
+                    <!--                    </exclusion>-->
                     <exclusion>
                         <groupId>org.slf4j</groupId>
                         <artifactId>slf4j-api</artifactId>
@@ -414,6 +414,18 @@
                         </execution>
                     </executions>
                 </plugin>
+                <!-- delombok -->
+                <plugin>
+                    <groupId>org.projectlombok</groupId>
+                    <artifactId>lombok-maven-plugin</artifactId>
+                    <version>${lombok-maven-plugin.version}</version>
+                </plugin>
+                <!-- 将特定目录作为源文件目录 -->
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>build-helper-maven-plugin</artifactId>
+                    <version>${build-helper-maven-plugin.version}</version>
+                </plugin>
             </plugins>
         </pluginManagement>
 
@@ -421,6 +433,18 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>delombok</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
 
