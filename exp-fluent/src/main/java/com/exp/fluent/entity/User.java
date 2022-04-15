@@ -7,11 +7,12 @@ import cn.org.atool.fluent.mybatis.base.RichEntity;
 import com.exp.fluent.constant.TokenType;
 import com.exp.fluent.defaults.IEntityDefault;
 import com.exp.fluent.defaults.IEntityDefaultSetter;
-import java.util.Date;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 import org.apache.ibatis.type.EnumTypeHandler;
+
+import java.util.Date;
 
 /**
  * User: 数据映射实体定义

@@ -3,6 +3,8 @@
 
 ## exp-code-generator
 代码生成器
+1. 执行 com.exp.generator.fluent.FluentEntityGenerator.main 方法
+2. 执行 exp-fluent 的 mvn compile, 生成 XyzBaseDao
 
 ## exp-datasource
 数据源

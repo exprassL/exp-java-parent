@@ -1,4 +1,4 @@
-package com.exp.genetator.fluent;
+package com.exp.generator.fluent;
 
 import cn.org.atool.generator.FileGenerator;
 import cn.org.atool.generator.annotation.*;
