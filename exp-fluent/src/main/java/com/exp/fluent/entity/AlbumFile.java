@@ -6,10 +6,11 @@ import cn.org.atool.fluent.mybatis.annotation.TableId;
 import cn.org.atool.fluent.mybatis.base.RichEntity;
 import com.exp.fluent.defaults.IEntityDefault;
 import com.exp.fluent.defaults.IEntityDefaultSetter;
-import java.util.Date;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+
+import java.util.Date;
 
 /**
  * AlbumFile: 数据映射实体定义
