@@ -27,22 +27,21 @@ import static com.exp.web.file.buffer.BufferPool.rootDirectory;
 /**
  * 文件系统访问
  */
-@Slf4j
 @RestController
 @RequestMapping("/access")
 public class FileAccessCtrl {
-    
+
     @Resource
     private IFileAccessService fileAccessService;
-    
+
     /**
      * 打开指定目录，若指定路径不是目录而是文件，则转发到文件下载
      *
-     * @param path  指定路径，相对于{@link BufferPool#rootDirectory}
+     * @param path    指定路径，相对于{@link BufferPool#rootDirectory}
      * @param request
      * @return
      */
-    @GetMapping(value = {"/open/{path}", "/open/", "/open"})
+    @GetMapping(value = { "/open/{path}", "/open/", "/open" })
     @Hex2StringPointCut
     public BaseResult open(@PathVariable(name = "path", required = false) String path, HttpServletRequest request) {
         File file;
@@ -51,7 +50,7 @@ public class FileAccessCtrl {
         } else {
             file = new File(rootDirectory + path);
             Asserts.isTrue(file.exists(), "文件或目录不存在：%s", path);
-            
+
             if (file.isFile()) { // 文件缓存到当前线程，并转发到文件下载请求
                 String uuid = UUID.randomUUID().toString();
                 HttpSession session = request.getSession();
@@ -67,7 +66,7 @@ public class FileAccessCtrl {
         result.put("fileList", infoList);
         return result;
     }
-    
+
     /**
      * 文件预览或下载
      *
@@ -92,11 +91,11 @@ public class FileAccessCtrl {
         }
         // FIXME 音乐或视频文件可否直接在页面生成对应的标签进行播放？PDF或word预览？
     }
-    
+
     /**
      * 下载指定文件或目录
      *
-     * @param path 指定文件或目录路径
+     * @param path     指定文件或目录路径
      * @param response
      */
     @GetMapping(value = "/get/{path}")

@@ -47,4 +47,7 @@ app:
         redirect-uri: # 注册的 OAuth 授权回调地址
     wechat:
     alipay:
-
+sso:
+  auth:
+    unauthenticated: #http://localhost:8080/unauthenticated # 未登录页面
+    unauthorized: #http://localhost:8080/unauthorized # 未授权页面
